@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by alexmprog on 18.12.2015.
  */
-public interface TweeterRepository {
+public interface TweetRepository {
 
     void getTimeline(final Callback<List<Tweet>> callback);
 }

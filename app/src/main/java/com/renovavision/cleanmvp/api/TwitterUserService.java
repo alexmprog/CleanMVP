@@ -9,8 +9,8 @@ import retrofit.http.Query;
 /**
  * Created by alexmprog on 18.12.2015.
  */
-public interface UserService {
+public interface TwitterUserService {
     @GET("/1.1/users/show.json")
-    void userShow(@Query("screen_name") String screenName,
-                  @Query("include_entities") boolean includeEntities, Callback<User> callback);
+    void getUser(@Query("screen_name") String screenName,
+                 @Query("include_entities") boolean includeEntities, Callback<User> callback);
 }

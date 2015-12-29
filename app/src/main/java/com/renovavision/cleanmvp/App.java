@@ -1,21 +1,25 @@
 package com.renovavision.cleanmvp;
 
 import android.app.Application;
+import android.support.annotation.NonNull;
 
 import com.renovavision.cleanmvp.di.component.AppComponent;
 import com.renovavision.cleanmvp.di.component.DaggerAppComponent;
+import com.renovavision.cleanmvp.di.component.DaggerTwitterComponent;
 import com.renovavision.cleanmvp.di.component.TwitterComponent;
 import com.renovavision.cleanmvp.di.module.AppModule;
+import com.renovavision.cleanmvp.di.module.TwitterModule;
 import com.renovavision.cleanmvp.util.config.BuildConfigManager;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
 import com.twitter.sdk.android.core.TwitterCore;
+import com.twitter.sdk.android.core.TwitterSession;
 
 import io.fabric.sdk.android.Fabric;
 
 /**
  * Created by alexmprog on 18.12.2015.
  */
-public class App extends Application {
+public class App extends Application implements Injectable {
 
     private AppComponent mAppComponent;
     private TwitterComponent mTwitterComponent;
@@ -40,11 +44,18 @@ public class App extends Application {
         Fabric.with(this, new TwitterCore(authConfig));
     }
 
+    @NonNull
     public AppComponent getAppComponent() {
         return mAppComponent;
     }
 
+    @NonNull
     public TwitterComponent getTwitterComponent() {
         return mTwitterComponent;
+    }
+
+    @Override
+    public void createTwitterComponent(@NonNull TwitterSession twitterSession) {
+        mTwitterComponent = DaggerTwitterComponent.builder().appComponent(mAppComponent).twitterModule(new TwitterModule(twitterSession)).build();
     }
 }
