@@ -1,4 +1,3 @@
-
 Properties props = new Properties()
 File propsFile = file('fabric.properties')
 if (propsFile.exists()) {

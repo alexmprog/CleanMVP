@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.renovavision.cleanmvp.R;
-import com.renovavision.cleanmvp.entities.Article;
+import com.renovavision.cleanmvp.model.Article;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;

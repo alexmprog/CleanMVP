@@ -1,8 +1,7 @@
 package com.renovavision.cleanmvp.presenters;
 
 /**
- * Created by alexmprog on 21.12.2015.
+ * Created by alexmprog on 12.01.2016.
  */
-public interface SplashPresenter {
-    void onViewCreated();
+public interface SplashPresenter extends BasePresenter {
 }

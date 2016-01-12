@@ -1,10 +1,8 @@
-package com.renovavision.cleanmvp.entities;
+package com.renovavision.cleanmvp.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
-
-import com.twitter.sdk.android.core.models.Tweet;
 
 /**
  * Created by alexmprog on 21.12.2015.

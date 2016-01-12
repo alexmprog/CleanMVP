@@ -1,10 +1,12 @@
-package com.renovavision.cleanmvp.presenters.impl;
+package com.renovavision.cleanmvp.presenters;
 
 import android.support.annotation.NonNull;
 
 import com.renovavision.cleanmvp.Injectable;
 import com.renovavision.cleanmvp.presenters.LoginPresenter;
-import com.renovavision.cleanmvp.presenters.views.LoginView;
+import com.renovavision.cleanmvp.ui.views.BaseView;
+import com.renovavision.cleanmvp.ui.views.LoginView;
+import com.renovavision.cleanmvp.util.flow.FlowManager;
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.TwitterException;
@@ -13,16 +15,26 @@ import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 
 import java.lang.ref.WeakReference;
 
+import javax.inject.Inject;
+
 /**
  * Created by alexmprog on 21.12.2015.
  */
-public class LoginPresenterImpl implements LoginPresenter {
+public class LoginPresenterImpl extends BasePresenterImpl implements LoginPresenter {
+
+    @Inject
+    FlowManager mFlowManager;
 
     @NonNull
     private WeakReference<LoginView> mLoginViewRef;
 
-    public LoginPresenterImpl(@NonNull LoginView loginView) {
-        this.mLoginViewRef = new WeakReference<>(loginView);
+    @NonNull
+    private Injectable mInjectable;
+
+    public LoginPresenterImpl(@NonNull LoginView loginView, @NonNull Injectable injectable) {
+        mLoginViewRef = new WeakReference<>(loginView);
+        mInjectable = injectable;
+        injectable.getAppComponent().inject(this);
     }
 
     @Override
@@ -35,9 +47,12 @@ public class LoginPresenterImpl implements LoginPresenter {
                     return;
                 }
 
-                Injectable injectable = loginView.getInjectable();
-                injectable.createTwitterComponent(result.data);
-                loginView.openTopArticlesView();
+                // create twitter service
+                mInjectable.createTwitterComponent(result.data);
+
+                // open top articles screen
+                mFlowManager.openTopArticlesScreen(loginView.getContext());
+                loginView.finishView();
             }
 
             @Override
@@ -47,8 +62,13 @@ public class LoginPresenterImpl implements LoginPresenter {
                     return;
                 }
 
-                loginView.showError(exception.getMessage());
+                loginView.showMessage(exception.getMessage());
             }
         });
+    }
+
+    @Override
+    public LoginView getView() {
+        return mLoginViewRef.get();
     }
 }

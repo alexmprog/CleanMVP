@@ -1,6 +1,9 @@
 <resources>
-    <string name="app_name">CleanMVP</string>
+    <string name="app_name">Clean MVP</string>
     <string name="action_settings">Settings</string>
     <string name="try_again">Please, Try again.</string>
     <string name="logout">Logout</string>
+    <string name="user_avatar">User avatar</string>
+    <string name="top_images">Top images</string>
+    <string name="top_articles">Top articles</string>
 </resources>

@@ -1,6 +1,6 @@
 package com.renovavision.cleanmvp.util.holder;
 
-import com.renovavision.cleanmvp.presenters.Presenter;
+import com.renovavision.cleanmvp.presenters.BasePresenter;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,17 +10,17 @@ import java.util.Map;
  */
 public class PresenterHolder {
 
-    private final Map<Class, Presenter> presenterMap;
+    private final Map<Class, BasePresenter> presenterMap;
 
     public PresenterHolder() {
         this.presenterMap = new HashMap<>();
     }
 
-    public void putPresenter(Class c, Presenter p) {
+    public void putPresenter(Class c, BasePresenter p) {
         presenterMap.put(c, p);
     }
 
-    public <T extends Presenter> T getPresenter(Class<T> c) {
+    public <T extends BasePresenter> T getPresenter(Class<T> c) {
         return (T) presenterMap.get(c);
     }
 

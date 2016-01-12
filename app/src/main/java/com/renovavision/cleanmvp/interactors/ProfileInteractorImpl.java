@@ -3,7 +3,7 @@ package com.renovavision.cleanmvp.interactors;
 import android.support.annotation.NonNull;
 
 import com.renovavision.cleanmvp.Injectable;
-import com.renovavision.cleanmvp.entities.Profile;
+import com.renovavision.cleanmvp.model.Profile;
 import com.renovavision.cleanmvp.repositories.UserRepository;
 import com.renovavision.cleanmvp.repositories.UserRepositoryImpl;
 import com.twitter.sdk.android.core.Callback;

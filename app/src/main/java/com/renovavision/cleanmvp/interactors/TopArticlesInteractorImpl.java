@@ -1,10 +1,12 @@
 package com.renovavision.cleanmvp.interactors;
 
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
 
 import com.renovavision.cleanmvp.Injectable;
-import com.renovavision.cleanmvp.entities.Article;
+import com.renovavision.cleanmvp.model.Article;
 import com.renovavision.cleanmvp.repositories.TweetRepository;
 import com.renovavision.cleanmvp.repositories.TweetRepositoryImpl;
 import com.twitter.sdk.android.core.Callback;
@@ -52,8 +54,7 @@ public class TopArticlesInteractorImpl implements TopArticlesInteractor {
         final List<Article> items = new ArrayList<>();
         for (Tweet tweet : result.data) {
             if (tweet.entities != null && tweet.entities.urls != null &&
-                    tweet.entities.urls.size() > 0 &&
-                    isEligibleDomain(tweet.entities.urls)) {
+                    !tweet.entities.urls.isEmpty()) {
                 items.add(createArticle(tweet));
             }
         }
@@ -66,18 +67,14 @@ public class TopArticlesInteractorImpl implements TopArticlesInteractor {
         if (tweet.entities.media != null && tweet.entities.media.size() > 0) {
             imgUrl = tweet.entities.media.get(0).mediaUrl;
         }
-        final String title = tweet.text.split("http")[0];
+
+        String title = tweet.text.split("http")[0];
+        if (TextUtils.isEmpty(title)) {
+            title = tweet.text.split(Patterns.WEB_URL.pattern())[0];
+        }
+
+
         return new Article(title, tweet.entities.urls.get(0).expandedUrl, tweet.retweetCount,
                 imgUrl == null ? "" : imgUrl + ":thumb");
-    }
-
-    private boolean isEligibleDomain(List<UrlEntity> urls) {
-        if (urls == null || urls.get(0) == null || urls.get(0).expandedUrl == null) {
-            return false;
-        }
-        final String url = urls.get(0).expandedUrl;
-        return !url.contains("twitter.com") && !url.contains("goo.gl") &&
-                !url.contains("vine.co") && !url.contains("vimeo.com") &&
-                !url.contains("youtube.com") && !url.contains("youtu.be");
     }
 }

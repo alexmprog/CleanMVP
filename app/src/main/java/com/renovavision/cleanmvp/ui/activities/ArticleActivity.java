@@ -13,7 +13,7 @@ import android.webkit.WebViewClient;
 import android.widget.TextView;
 
 import com.renovavision.cleanmvp.R;
-import com.renovavision.cleanmvp.entities.Article;
+import com.renovavision.cleanmvp.model.Article;
 import com.twitter.sdk.android.core.TwitterCore;
 
 import butterknife.Bind;

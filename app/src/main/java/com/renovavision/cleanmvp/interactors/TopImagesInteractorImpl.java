@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.renovavision.cleanmvp.Injectable;
-import com.renovavision.cleanmvp.entities.Image;
+import com.renovavision.cleanmvp.model.Image;
 import com.renovavision.cleanmvp.repositories.TweetRepository;
 import com.renovavision.cleanmvp.repositories.TweetRepositoryImpl;
 import com.twitter.sdk.android.core.Callback;

@@ -1,6 +1,4 @@
-package com.renovavision.cleanmvp.entities;
-
-import com.twitter.sdk.android.core.models.User;
+package com.renovavision.cleanmvp.model;
 
 /**
  * Created by alexmprog on 21.12.2015.

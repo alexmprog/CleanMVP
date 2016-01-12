@@ -1,6 +1,6 @@
 package com.renovavision.cleanmvp.interactors;
 
-import com.renovavision.cleanmvp.entities.Profile;
+import com.renovavision.cleanmvp.model.Profile;
 import com.twitter.sdk.android.core.Callback;
 
 /**

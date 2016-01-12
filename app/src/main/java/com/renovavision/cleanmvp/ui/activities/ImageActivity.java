@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.renovavision.cleanmvp.R;
-import com.renovavision.cleanmvp.entities.Image;
+import com.renovavision.cleanmvp.model.Image;
 import com.squareup.picasso.Picasso;
 
 import butterknife.Bind;

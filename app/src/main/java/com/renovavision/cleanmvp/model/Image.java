@@ -1,4 +1,4 @@
-package com.renovavision.cleanmvp.entities;
+package com.renovavision.cleanmvp.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
