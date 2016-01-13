@@ -9,12 +9,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 
 import com.renovavision.cleanmvp.Injectable;
 import com.renovavision.cleanmvp.R;
 import com.renovavision.cleanmvp.presenters.LoginPresenter;
-import com.renovavision.cleanmvp.presenters.LoginPresenterImpl;
+import com.renovavision.cleanmvp.presenters.impl.LoginPresenterImpl;
 import com.renovavision.cleanmvp.ui.views.LoginView;
 import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 
@@ -31,9 +30,6 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
 
     @Bind(R.id.login_container)
     FrameLayout loginContainer;
-
-    @Bind(R.id.login_progress)
-    ProgressBar progressBar;
 
     @NonNull
     private LoginPresenter mLoginPresenter;
@@ -55,18 +51,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
     }
 
     @Override
-    public void showProgress() {
-        progressBar.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void hideProgress() {
-        progressBar.setVisibility(View.GONE);
-    }
-
-    @Override
     public void showMessage(String mMessage) {
-        progressBar.setVisibility(View.GONE);
         Snackbar.make(loginContainer, R.string.try_again, Snackbar.LENGTH_SHORT).show();
     }
 

@@ -9,7 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.renovavision.cleanmvp.Injectable;
 import com.renovavision.cleanmvp.R;
 import com.renovavision.cleanmvp.presenters.SplashPresenter;
-import com.renovavision.cleanmvp.presenters.SplashPresenterImpl;
+import com.renovavision.cleanmvp.presenters.impl.SplashPresenterImpl;
 import com.renovavision.cleanmvp.ui.views.SplashView;
 
 /**

@@ -22,17 +22,6 @@ public class Image implements Comparable<Image>, Parcelable {
         this.mediaUrl = mediaUrl;
     }
 
-    public static Image create(Tweet tweet) {
-        String imgUrl = null;
-        if (tweet.entities.media != null && tweet.entities.media.size() > 0) {
-            imgUrl = tweet.entities.media.get(0).mediaUrl;
-        }
-        final String title = tweet.text.split("http")[0];
-        return new Image(title, tweet.retweetCount,
-                imgUrl == null ? "" : imgUrl + ":large");
-    }
-
-
     public String getTitle() {
         return title;
     }

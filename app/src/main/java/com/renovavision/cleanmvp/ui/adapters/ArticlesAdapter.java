@@ -62,6 +62,11 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Articl
         return items.get(position);
     }
 
+    public void setItems(@NonNull List<Article> articleList) {
+        items = articleList;
+        notifyDataSetChanged();
+    }
+
     final static class ArticleViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.title)
         TextView title;

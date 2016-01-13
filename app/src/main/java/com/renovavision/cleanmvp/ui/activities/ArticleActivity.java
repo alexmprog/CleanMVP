@@ -1,20 +1,25 @@
 package com.renovavision.cleanmvp.ui.activities;
 
-import android.content.Intent;
+import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.renovavision.cleanmvp.R;
 import com.renovavision.cleanmvp.model.Article;
-import com.twitter.sdk.android.core.TwitterCore;
+import com.renovavision.cleanmvp.presenters.ArticlePresenter;
+import com.renovavision.cleanmvp.presenters.impl.ArticlePresenterImpl;
+import com.renovavision.cleanmvp.ui.views.ArticleView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -22,62 +27,64 @@ import butterknife.ButterKnife;
 /**
  * Created by alexmprog on 22.12.2015.
  */
-public class ArticleActivity extends AppCompatActivity {
-    public static final String EXTRA_ARTICLE = "article";
-    public static final String TRANSITION_SHARED_ELEMENT = "title";
+public class ArticleActivity extends AppCompatActivity implements ArticleView {
 
-    @Bind(R.id.card_view)
-    CardView cardView;
+    @Bind(R.id.container_inner_item)
+    RelativeLayout mInnerContainer;
+
     @Bind(R.id.title)
-    TextView titleView;
+    TextView mTitleView;
+
     @Bind(R.id.tweet)
-    TextView tweetView;
+    TextView mTweetView;
+
     @Bind(R.id.web_view)
-    WebView webView;
+    WebView mWebView;
+
+    @Bind(R.id.progress)
+    ProgressBar mProgressBar;
+
+    @NonNull
+    private ArticlePresenter mArticlePresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        Bundle extras = getIntent().getExtras();
-        Article article = extras.getParcelable(EXTRA_ARTICLE);
-
         setContentView(R.layout.activity_article);
         ButterKnife.bind(this);
 
-        View innerContainer = cardView.findViewById(R.id.container_inner_item);
-        ViewCompat.setTransitionName(innerContainer, TRANSITION_SHARED_ELEMENT);
-        if (article != null) {
-            titleView.setText(article.getTitle());
-            tweetView.setText(article.getTweetCount());
-            webView.setWebViewClient(new WebViewClient());
-            webView.loadUrl(article.getUrl());
-        } else {
-            finish();
-        }
+        ViewCompat.setTransitionName(mInnerContainer, TRANSITION_SHARED_ELEMENT);
+
+        mWebView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                mProgressBar.setVisibility(View.GONE);
+            }
+        });
+
+        mWebView.getSettings().setJavaScriptEnabled(true);
+
+        mArticlePresenter = new ArticlePresenterImpl(this);
+        mArticlePresenter.loadArticle(getIntent().getExtras());
+    }
+
+    @NonNull
+    @Override
+    public Context getContext() {
+        return this;
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_article, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.action_logout) {
-            logout();
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void logout() {
-        TwitterCore.getInstance().logOut();
+    public void finishView() {
         finish();
-        startActivity(new Intent(this, LoginActivity.class));
+    }
+
+    @Override
+    public void showArticle(@NonNull Article article) {
+        mTitleView.setText(article.getTitle());
+        mTweetView.setText(article.getTweetCount());
+        mProgressBar.setVisibility(View.VISIBLE);
+        mWebView.loadUrl(article.getUrl());
     }
 }

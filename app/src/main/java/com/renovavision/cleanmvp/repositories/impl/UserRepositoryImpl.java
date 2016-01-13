@@ -1,43 +1,41 @@
-package com.renovavision.cleanmvp.repositories;
+package com.renovavision.cleanmvp.repositories.impl;
+
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.renovavision.cleanmvp.Injectable;
 import com.renovavision.cleanmvp.api.CustomTwitterApi;
+import com.renovavision.cleanmvp.repositories.UserRepository;
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.TwitterException;
-import com.twitter.sdk.android.core.models.Tweet;
-
-import java.util.List;
+import com.twitter.sdk.android.core.models.User;
 
 import javax.inject.Inject;
 
 /**
  * Created by alexmprog on 21.12.2015.
  */
-public class TweetRepositoryImpl implements TweetRepository {
+public class UserRepositoryImpl implements UserRepository {
 
     @Inject
     CustomTwitterApi mTwitterApi;
 
-    public TweetRepositoryImpl(@NonNull Injectable injectable) {
+    public UserRepositoryImpl(@NonNull Injectable injectable) {
         injectable.getTwitterComponent().inject(this);
     }
 
     @Override
-    public void getTimeline(@NonNull final Callback<List<Tweet>> callback) {
-        mTwitterApi.getTimelineService().getTimeline(200, true, true, true, true,
-                new Callback<List<Tweet>>() {
+    public void getUser(@NonNull final Callback<User> callback) {
+        mTwitterApi.getUser(
+                new Callback<User>() {
                     @Override
-                    public void success(Result<List<Tweet>> result) {
+                    public void success(Result<User> result) {
                         callback.success(result.data, result.response);
                     }
 
                     @Override
                     public void failure(TwitterException e) {
-                        Log.d("API error", e.getMessage());
                         callback.failure(e);
                     }
                 });

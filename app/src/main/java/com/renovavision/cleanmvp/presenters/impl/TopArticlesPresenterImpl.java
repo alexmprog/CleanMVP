@@ -1,14 +1,16 @@
-package com.renovavision.cleanmvp.presenters;
+package com.renovavision.cleanmvp.presenters.impl;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.view.View;
 
 import com.renovavision.cleanmvp.Injectable;
 import com.renovavision.cleanmvp.interactors.TopArticlesInteractor;
-import com.renovavision.cleanmvp.interactors.TopArticlesInteractorImpl;
+import com.renovavision.cleanmvp.interactors.impl.TopArticlesInteractorImpl;
 import com.renovavision.cleanmvp.model.Article;
+import com.renovavision.cleanmvp.presenters.TopArticlesPresenter;
 import com.renovavision.cleanmvp.ui.views.TopArticlesView;
-import com.renovavision.cleanmvp.util.flow.FlowManager;
+import com.renovavision.cleanmvp.util.screen.ScreenManager;
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.TwitterException;
@@ -26,7 +28,7 @@ public class TopArticlesPresenterImpl extends BasePresenterImpl implements TopAr
     private static final String TAG = TopArticlesPresenterImpl.class.getSimpleName();
 
     @Inject
-    FlowManager mFlowManager;
+    ScreenManager mScreenManager;
 
     @NonNull
     private WeakReference<TopArticlesView> mTopArticlesViewRef;
@@ -39,15 +41,17 @@ public class TopArticlesPresenterImpl extends BasePresenterImpl implements TopAr
     public TopArticlesPresenterImpl(@NonNull TopArticlesView topArticlesView, @NonNull Injectable injectable) {
         mTopArticlesViewRef = new WeakReference<>(topArticlesView);
         mTopArticlesInteractor = new TopArticlesInteractorImpl(injectable);
-        injectable.getAppComponent().inject(this);
+        injectable.getScreenComponent().inject(this);
     }
 
     @Override
     public void onViewCreate() {
         TopArticlesView view = getView();
-        if (view != null) {
-            view.showProgress();
+        if (view == null) {
+            return;
         }
+
+        view.showProgress();
 
         mTopArticlesInteractor.getTopArticles(new Callback<List<Article>>() {
             @Override
@@ -77,13 +81,21 @@ public class TopArticlesPresenterImpl extends BasePresenterImpl implements TopAr
     }
 
     @Override
-    public void openArticle(int position) {
+    public void openArticle(View view, int position) {
         if (mArticles == null || mArticles.isEmpty()) {
             return;
         }
 
-        mArticles.get(position);
+        Article article = mArticles.get(position);
+        if (article == null) {
+            return;
+        }
 
-        // open article here
+        TopArticlesView articlesView = getView();
+        if (articlesView == null) {
+            return;
+        }
+
+        mScreenManager.openArticleScreen(articlesView.getActivity(), article, articlesView.getTransitionAnimationView(view));
     }
 }

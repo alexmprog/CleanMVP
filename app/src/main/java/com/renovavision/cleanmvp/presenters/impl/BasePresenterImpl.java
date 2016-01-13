@@ -1,5 +1,6 @@
-package com.renovavision.cleanmvp.presenters;
+package com.renovavision.cleanmvp.presenters.impl;
 
+import com.renovavision.cleanmvp.presenters.BasePresenter;
 import com.renovavision.cleanmvp.ui.views.BaseView;
 
 /**

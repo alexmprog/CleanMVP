@@ -1,12 +1,11 @@
-package com.renovavision.cleanmvp.presenters;
+package com.renovavision.cleanmvp.presenters.impl;
 
 import android.support.annotation.NonNull;
 
 import com.renovavision.cleanmvp.Injectable;
 import com.renovavision.cleanmvp.presenters.LoginPresenter;
-import com.renovavision.cleanmvp.ui.views.BaseView;
 import com.renovavision.cleanmvp.ui.views.LoginView;
-import com.renovavision.cleanmvp.util.flow.FlowManager;
+import com.renovavision.cleanmvp.util.screen.ScreenManager;
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.TwitterException;
@@ -23,7 +22,7 @@ import javax.inject.Inject;
 public class LoginPresenterImpl extends BasePresenterImpl implements LoginPresenter {
 
     @Inject
-    FlowManager mFlowManager;
+    ScreenManager mScreenManager;
 
     @NonNull
     private WeakReference<LoginView> mLoginViewRef;
@@ -34,7 +33,7 @@ public class LoginPresenterImpl extends BasePresenterImpl implements LoginPresen
     public LoginPresenterImpl(@NonNull LoginView loginView, @NonNull Injectable injectable) {
         mLoginViewRef = new WeakReference<>(loginView);
         mInjectable = injectable;
-        injectable.getAppComponent().inject(this);
+        injectable.getScreenComponent().inject(this);
     }
 
     @Override
@@ -51,7 +50,7 @@ public class LoginPresenterImpl extends BasePresenterImpl implements LoginPresen
                 mInjectable.createTwitterComponent(result.data);
 
                 // open top articles screen
-                mFlowManager.openTopArticlesScreen(loginView.getContext());
+                mScreenManager.openHomeScreen(loginView.getContext());
                 loginView.finishView();
             }
 

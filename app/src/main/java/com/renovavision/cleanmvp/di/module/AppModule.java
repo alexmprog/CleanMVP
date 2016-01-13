@@ -5,8 +5,6 @@ import android.preference.PreferenceManager;
 
 import com.renovavision.cleanmvp.App;
 import com.renovavision.cleanmvp.util.config.BuildConfigManager;
-import com.renovavision.cleanmvp.util.flow.FlowManager;
-import com.renovavision.cleanmvp.util.holder.PresenterHolder;
 
 import javax.inject.Singleton;
 
@@ -42,17 +40,5 @@ public class AppModule {
     @Singleton
     BuildConfigManager providesBuildConfigManager() {
         return new BuildConfigManager();
-    }
-
-    @Provides
-    @Singleton
-    PresenterHolder providesPresenterHolder() {
-        return new PresenterHolder();
-    }
-
-    @Provides
-    @Singleton
-    FlowManager providesFlowManager() {
-        return new FlowManager();
     }
 }

@@ -6,4 +6,7 @@
     <string name="user_avatar">User avatar</string>
     <string name="top_images">Top images</string>
     <string name="top_articles">Top articles</string>
+    <string name="welcome_to_clean_mvp_app">Welcome to Clean MVP app!</string>
+    <string name="tweet">Tweet</string>
+    <string name="media">media</string>
 </resources>

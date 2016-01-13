@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.renovavision.cleanmvp.R;
+import com.renovavision.cleanmvp.model.Article;
 import com.renovavision.cleanmvp.model.Image;
 import com.squareup.picasso.Picasso;
 
@@ -59,6 +60,11 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ImageViewH
 
     public Image getItem(int position) {
         return items.get(position);
+    }
+
+    public void setItems(@NonNull List<Image> imageList) {
+        items = imageList;
+        notifyDataSetChanged();
     }
 
     final static class ImageViewHolder extends RecyclerView.ViewHolder {

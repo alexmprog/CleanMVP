@@ -5,9 +5,12 @@ import android.support.annotation.NonNull;
 
 import com.renovavision.cleanmvp.di.component.AppComponent;
 import com.renovavision.cleanmvp.di.component.DaggerAppComponent;
+import com.renovavision.cleanmvp.di.component.DaggerScreenComponent;
 import com.renovavision.cleanmvp.di.component.DaggerTwitterComponent;
+import com.renovavision.cleanmvp.di.component.ScreenComponent;
 import com.renovavision.cleanmvp.di.component.TwitterComponent;
 import com.renovavision.cleanmvp.di.module.AppModule;
+import com.renovavision.cleanmvp.di.module.ScreenModule;
 import com.renovavision.cleanmvp.di.module.TwitterModule;
 import com.renovavision.cleanmvp.util.config.BuildConfigManager;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
@@ -23,6 +26,7 @@ public class App extends Application implements Injectable {
 
     private AppComponent mAppComponent;
     private TwitterComponent mTwitterComponent;
+    private ScreenComponent mFlowComponent;
 
     @Override
     public void onCreate() {
@@ -35,6 +39,10 @@ public class App extends Application implements Injectable {
     private void buildObjectGraph() {
         mAppComponent = DaggerAppComponent.builder()
                 .appModule(new AppModule(this))
+                .build();
+
+        mFlowComponent = DaggerScreenComponent.builder()
+                .screenModule(new ScreenModule())
                 .build();
     }
 
@@ -54,8 +62,17 @@ public class App extends Application implements Injectable {
         return mTwitterComponent;
     }
 
+    @NonNull
+    @Override
+    public ScreenComponent getScreenComponent() {
+        return mFlowComponent;
+    }
+
     @Override
     public void createTwitterComponent(@NonNull TwitterSession twitterSession) {
-        mTwitterComponent = DaggerTwitterComponent.builder().appComponent(mAppComponent).twitterModule(new TwitterModule(twitterSession)).build();
+        mTwitterComponent = DaggerTwitterComponent.builder()
+                .appComponent(mAppComponent)
+                .twitterModule(new TwitterModule(twitterSession))
+                .build();
     }
 }

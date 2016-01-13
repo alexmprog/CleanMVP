@@ -1,13 +1,14 @@
-package com.renovavision.cleanmvp.presenters;
+package com.renovavision.cleanmvp.presenters.impl;
 
 import android.content.Context;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 
 import com.renovavision.cleanmvp.Injectable;
+import com.renovavision.cleanmvp.presenters.SplashPresenter;
 import com.renovavision.cleanmvp.ui.views.BaseView;
 import com.renovavision.cleanmvp.ui.views.SplashView;
-import com.renovavision.cleanmvp.util.flow.FlowManager;
+import com.renovavision.cleanmvp.util.screen.ScreenManager;
 import com.twitter.sdk.android.core.TwitterCore;
 import com.twitter.sdk.android.core.TwitterSession;
 
@@ -32,13 +33,13 @@ public class SplashPresenterImpl extends BasePresenterImpl implements SplashPres
     Injectable mInjectable;
 
     @Inject
-    FlowManager mFlowManager;
+    ScreenManager mScreenManager;
 
     public SplashPresenterImpl(@NonNull SplashView splashView, @NonNull Injectable injectable) {
         mSplashViewRef = new WeakReference<>(splashView);
         mHandler = new Handler();
         mInjectable = injectable;
-        injectable.getAppComponent().inject(this);
+        injectable.getScreenComponent().inject(this);
     }
 
     @Override
@@ -77,13 +78,13 @@ public class SplashPresenterImpl extends BasePresenterImpl implements SplashPres
             }
 
             Context context = view.getContext();
-            FlowManager flowManager = presenter.mFlowManager;
+            ScreenManager flowManager = presenter.mScreenManager;
             TwitterSession activeSession = TwitterCore.getInstance().getSessionManager().getActiveSession();
             if (activeSession == null) {
                 flowManager.openLoginScreen(context);
             } else {
                 presenter.mInjectable.createTwitterComponent(activeSession);
-                flowManager.openTopArticlesScreen(context);
+                flowManager.openHomeScreen(context);
             }
             view.finishView();
         }

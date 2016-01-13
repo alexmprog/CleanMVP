@@ -16,24 +16,36 @@
             android:name="io.fabric.ApiKey"
             android:value="0028cf89facff8068acd1184032bd508cc26c169" />
 
-        <activity android:name=".ui.activities.SplashActivity">
+        <activity
+            android:name=".ui.activities.SplashActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.activities.LoginActivity" />
+        <activity
+            android:name=".ui.activities.LoginActivity"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".ui.activities.HomeActivity"
-            android:label="@string/top_articles" />
+            android:label="@string/top_articles"
+            android:screenOrientation="portrait" />
 
-        <activity android:name=".ui.activities.TopImagesActivity" />
+        <activity
+            android:name=".ui.activities.TopImagesActivity"
+            android:label="@string/top_images"
+            android:screenOrientation="portrait" />
 
-        <activity android:name=".ui.activities.ArticleActivity" />
+        <activity
+            android:name=".ui.activities.ArticleActivity"
+            android:screenOrientation="portrait" />
 
-        <activity android:name=".ui.activities.ImageActivity" />
+        <activity
+            android:name=".ui.activities.ImageActivity"
+            android:screenOrientation="portrait" />
 
     </application>
 </manifest>

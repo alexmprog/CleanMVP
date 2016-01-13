@@ -1,43 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_view"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="@dimen/spacing_xsmall">
+    android:layout_height="wrap_content"
+    android:foreground="?android:attr/selectableItemBackground"
+    card_view:cardBackgroundColor="@color/card_background"
+    card_view:cardElevation="4dp">
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/card_view"
+    <RelativeLayout
+        android:id="@+id/container_inner_item"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="200dp"
+        android:layout_centerVertical="true"
+        android:orientation="vertical">
 
-        <RelativeLayout
-            android:id="@+id/container_inner_item"
+        <ImageView
+            android:id="@+id/media"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
             android:layout_centerVertical="true"
-            android:orientation="vertical">
+            android:contentDescription="@string/media"
+            android:scaleType="centerCrop" />
 
-            <ImageView
-                android:id="@+id/media"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_centerVertical="true"
-                android:contentDescription="media"
-                android:scaleType="centerCrop" />
-
-            <TextView
-                android:id="@+id/tweet"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/media"
-                android:background="@color/material_blue_grey_800"
-                android:drawablePadding="@dimen/spacing_xsmall"
-                android:paddingLeft="@dimen/spacing_xsmall"
-                android:paddingStart="@dimen/spacing_xsmall"
-                android:text="Tweet"
-                android:textColor="@android:color/white" />
-        </RelativeLayout>
-    </android.support.v7.widget.CardView>
-</LinearLayout>
+        <TextView
+            android:id="@+id/tweet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/media"
+            android:background="@color/material_blue_grey_800"
+            android:drawablePadding="@dimen/spacing_xsmall"
+            android:paddingLeft="@dimen/spacing_xsmall"
+            android:paddingStart="@dimen/spacing_xsmall"
+            android:text="@string/tweet"
+            android:textColor="@android:color/white" />
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

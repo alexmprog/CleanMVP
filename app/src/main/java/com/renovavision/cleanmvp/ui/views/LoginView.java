@@ -5,9 +5,5 @@ package com.renovavision.cleanmvp.ui.views;
  */
 public interface LoginView extends BaseView {
 
-    void showProgress();
-
-    void hideProgress();
-
     void showMessage(String message);
 }

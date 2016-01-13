@@ -1,10 +1,9 @@
 package com.renovavision.cleanmvp.di.component;
 
-import com.renovavision.cleanmvp.api.CustomTwitterApi;
 import com.renovavision.cleanmvp.di.module.TwitterModule;
 import com.renovavision.cleanmvp.di.scope.UserScope;
-import com.renovavision.cleanmvp.repositories.TweetRepositoryImpl;
-import com.renovavision.cleanmvp.repositories.UserRepositoryImpl;
+import com.renovavision.cleanmvp.repositories.impl.TweetRepositoryImpl;
+import com.renovavision.cleanmvp.repositories.impl.UserRepositoryImpl;
 
 import dagger.Component;
 
@@ -19,6 +18,4 @@ public interface TwitterComponent {
     void inject(TweetRepositoryImpl tweetRepository);
 
     void inject(UserRepositoryImpl userRepository);
-
-    CustomTwitterApi getTwitterApi();
 }
