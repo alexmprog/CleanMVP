@@ -37,7 +37,7 @@ public class LoginPresenterImpl extends BasePresenterImpl implements LoginPresen
     }
 
     @Override
-    public void configureLoginButton(final TwitterLoginButton loginButton) {
+    public void configureLoginButton(@NonNull final TwitterLoginButton loginButton) {
         loginButton.setCallback(new Callback<TwitterSession>() {
             @Override
             public void success(Result<TwitterSession> result) {

@@ -7,10 +7,6 @@ import com.renovavision.cleanmvp.BuildConfig;
  */
 public class BuildConfigManager {
 
-    public BuildConfigManager() {
-
-    }
-
     public String getTwitterConsumerKey() {
         return BuildConfig.CONSUMER_KEY;
     }

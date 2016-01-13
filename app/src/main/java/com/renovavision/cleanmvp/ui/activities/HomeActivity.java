@@ -170,7 +170,7 @@ public class HomeActivity extends AppCompatActivity implements TopArticlesView, 
             mUserProfileView = (ImageView) mNavigationView.findViewById(R.id.avatar);
         }
 
-        mUsernameView.setText(profile.getHandle());
+        mUsernameView.setText(profile.getName());
         Picasso.with(this)
                 .load(profile.getProfileImageUrl())
                 .transform(new CircleTransformation())

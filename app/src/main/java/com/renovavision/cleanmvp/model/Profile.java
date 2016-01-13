@@ -5,19 +5,19 @@ package com.renovavision.cleanmvp.model;
  */
 public class Profile {
 
-    private final String handle;
-    private final String profileImageUrl;
+    private String nName;
+    private String nProfileImageUrl;
 
-    public Profile(String handle, String profileImageUrl) {
-        this.handle = handle;
-        this.profileImageUrl = profileImageUrl;
+    public Profile(String name, String profileImageUrl) {
+        this.nName = name;
+        this.nProfileImageUrl = profileImageUrl;
     }
 
-    public String getHandle() {
-        return handle;
+    public String getName() {
+        return nName;
     }
 
     public String getProfileImageUrl() {
-        return profileImageUrl;
+        return nProfileImageUrl;
     }
 }

@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -66,7 +64,7 @@ public class ImageActivity extends AppCompatActivity implements com.renovavision
     @Override
     public void showImage(@NonNull Image image) {
         Picasso.with(this).load(image.getMediaUrl()).into(mImageView);
-        mTweetView.setText(image.getRetweetCount());
+        mTweetView.setText(image.getTweetCount());
         mTitleView.setText(image.getTitle());
     }
 }

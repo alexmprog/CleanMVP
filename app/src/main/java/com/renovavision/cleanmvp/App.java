@@ -5,11 +5,14 @@ import android.support.annotation.NonNull;
 
 import com.renovavision.cleanmvp.di.component.AppComponent;
 import com.renovavision.cleanmvp.di.component.DaggerAppComponent;
+import com.renovavision.cleanmvp.di.component.DaggerDatabaseComponent;
 import com.renovavision.cleanmvp.di.component.DaggerScreenComponent;
 import com.renovavision.cleanmvp.di.component.DaggerTwitterComponent;
+import com.renovavision.cleanmvp.di.component.DatabaseComponent;
 import com.renovavision.cleanmvp.di.component.ScreenComponent;
 import com.renovavision.cleanmvp.di.component.TwitterComponent;
 import com.renovavision.cleanmvp.di.module.AppModule;
+import com.renovavision.cleanmvp.di.module.DatabaseModule;
 import com.renovavision.cleanmvp.di.module.ScreenModule;
 import com.renovavision.cleanmvp.di.module.TwitterModule;
 import com.renovavision.cleanmvp.util.config.BuildConfigManager;
@@ -27,6 +30,7 @@ public class App extends Application implements Injectable {
     private AppComponent mAppComponent;
     private TwitterComponent mTwitterComponent;
     private ScreenComponent mFlowComponent;
+    private DatabaseComponent mDatabaseComponent;
 
     @Override
     public void onCreate() {
@@ -43,6 +47,10 @@ public class App extends Application implements Injectable {
 
         mFlowComponent = DaggerScreenComponent.builder()
                 .screenModule(new ScreenModule())
+                .build();
+
+        mDatabaseComponent = DaggerDatabaseComponent.builder()
+                .databaseModule(new DatabaseModule(this))
                 .build();
     }
 
@@ -63,9 +71,13 @@ public class App extends Application implements Injectable {
     }
 
     @NonNull
-    @Override
     public ScreenComponent getScreenComponent() {
         return mFlowComponent;
+    }
+
+    @NonNull
+    public DatabaseComponent getDatabaseComponent() {
+        return mDatabaseComponent;
     }
 
     @Override

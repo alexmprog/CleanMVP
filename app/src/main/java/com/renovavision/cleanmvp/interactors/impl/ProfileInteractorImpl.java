@@ -1,6 +1,7 @@
 package com.renovavision.cleanmvp.interactors.impl;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.renovavision.cleanmvp.Injectable;
 import com.renovavision.cleanmvp.interactors.ProfileInteractor;
@@ -25,7 +26,7 @@ public class ProfileInteractorImpl implements ProfileInteractor {
     }
 
     @Override
-    public void getUserProfile(@NonNull final Callback<Profile> callback) {
+    public void getProfile(@NonNull final Callback<Profile> callback) {
         mUserRepository.getUser(
                 new Callback<User>() {
                     @Override
@@ -35,12 +36,13 @@ public class ProfileInteractorImpl implements ProfileInteractor {
 
                     @Override
                     public void failure(TwitterException e) {
+                        Log.d("API error", e.getMessage());
                         callback.failure(e);
                     }
                 });
     }
 
     private Profile createProfile(User data) {
-        return new Profile("@" + data.screenName, data.profileImageUrl.replace("_normal", ""));
+        return new Profile(data.screenName, data.profileImageUrl.replace("_normal", ""));
     }
 }

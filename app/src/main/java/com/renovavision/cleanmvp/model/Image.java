@@ -4,61 +4,64 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
-import com.twitter.sdk.android.core.models.Tweet;
-
 /**
  * Created by alexmprog on 21.12.2015.
  */
 public class Image implements Comparable<Image>, Parcelable {
 
-    private final String title;
-    private String url;
-    private final int retweetCount;
-    private final String mediaUrl;
+    private static final int HASH_CODE = 31;
 
-    public Image(String title, int retweetCount, String mediaUrl) {
-        this.title = title;
-        this.retweetCount = retweetCount;
-        this.mediaUrl = mediaUrl;
+    private String mTitle;
+    private int mTweetCount;
+    private String mMediaUrl;
+
+    public Image(String title, int tweetCount, String mediaUrl) {
+        this.mTitle = title;
+        this.mTweetCount = tweetCount;
+        this.mMediaUrl = mediaUrl;
     }
 
     public String getTitle() {
-        return title;
+        return mTitle;
     }
 
-    public String getUrl() {
-        return url;
-    }
-
-    public String getRetweetCount() {
-        return String.valueOf(retweetCount);
+    public String getTweetCount() {
+        return String.valueOf(mTweetCount);
     }
 
     @NonNull
     public String getMediaUrl() {
-        return mediaUrl;
+        return mMediaUrl;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         Image image = (Image) o;
 
-        if (retweetCount != image.retweetCount) return false;
-        if (title != null ? !title.equals(image.title) : image.title != null) return false;
-        if (url != null ? !url.equals(image.url) : image.url != null) return false;
-        return !(mediaUrl != null ? !mediaUrl.equals(image.mediaUrl) : image.mediaUrl != null);
+        if (mTweetCount != image.mTweetCount) {
+            return false;
+        }
+
+        if (mTitle != null ? !mTitle.equals(image.mTitle) : image.mTitle != null) {
+            return false;
+        }
+        return !(mMediaUrl != null ? !mMediaUrl.equals(image.mMediaUrl) : image.mMediaUrl != null);
 
     }
 
     @Override
     public int hashCode() {
-        int result = title != null ? title.hashCode() : 0;
-        result = 31 * result + (url != null ? url.hashCode() : 0);
-        result = 31 * result + retweetCount;
-        result = 31 * result + (mediaUrl != null ? mediaUrl.hashCode() : 0);
+        int result = mTitle != null ? mTitle.hashCode() : 0;
+        result = HASH_CODE * result + mTweetCount;
+        result = HASH_CODE * result + (mMediaUrl != null ? mMediaUrl.hashCode() : 0);
         return result;
     }
 
@@ -69,17 +72,15 @@ public class Image implements Comparable<Image>, Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.title);
-        dest.writeString(this.url);
-        dest.writeInt(this.retweetCount);
-        dest.writeString(this.mediaUrl);
+        dest.writeString(this.mTitle);
+        dest.writeInt(this.mTweetCount);
+        dest.writeString(this.mMediaUrl);
     }
 
     protected Image(Parcel in) {
-        this.title = in.readString();
-        this.url = in.readString();
-        this.retweetCount = in.readInt();
-        this.mediaUrl = in.readString();
+        this.mTitle = in.readString();
+        this.mTweetCount = in.readInt();
+        this.mMediaUrl = in.readString();
     }
 
     public static final Parcelable.Creator<Image> CREATOR = new Parcelable.Creator<Image>() {
@@ -94,7 +95,7 @@ public class Image implements Comparable<Image>, Parcelable {
 
     @Override
     public int compareTo(@NonNull Image another) {
-        if (this.equals(another) || this.retweetCount == another.retweetCount) return 0;
-        return (this.retweetCount > another.retweetCount) ? -1 : 1;
+        if (this.equals(another) || this.mTweetCount == another.mTweetCount) return 0;
+        return (this.mTweetCount > another.mTweetCount) ? -1 : 1;
     }
 }

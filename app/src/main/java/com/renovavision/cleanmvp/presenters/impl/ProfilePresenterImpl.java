@@ -43,7 +43,7 @@ public class ProfilePresenterImpl extends BasePresenterImpl implements ProfilePr
 
     @Override
     public void onViewCreate() {
-        mProfileInteractor.getUserProfile(new Callback<Profile>() {
+        mProfileInteractor.getProfile(new Callback<Profile>() {
             @Override
             public void success(Result<Profile> result) {
                 ProfileView view = getView();

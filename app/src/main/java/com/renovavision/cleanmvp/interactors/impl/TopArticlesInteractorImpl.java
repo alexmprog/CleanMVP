@@ -4,6 +4,10 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.renovavision.cleanmvp.Injectable;
+import com.renovavision.cleanmvp.datastories.ArticleDataStore;
+import com.renovavision.cleanmvp.datastories.DataStoreCallback;
+import com.renovavision.cleanmvp.datastories.DataStoreException;
+import com.renovavision.cleanmvp.datastories.impl.ArticleDataStoreImpl;
 import com.renovavision.cleanmvp.interactors.TopArticlesInteractor;
 import com.renovavision.cleanmvp.model.Article;
 import com.renovavision.cleanmvp.repositories.TweetRepository;
@@ -23,32 +27,64 @@ import java.util.List;
 public class TopArticlesInteractorImpl implements TopArticlesInteractor {
 
     @NonNull
-    private final TweetRepository mTweetRepository;
+    private TweetRepository mTweetRepository;
+
+    private ArticleDataStore mArticleDataStore;
 
     public TopArticlesInteractorImpl(@NonNull Injectable injectable) {
-        this.mTweetRepository = new TweetRepositoryImpl(injectable);
+        mTweetRepository = new TweetRepositoryImpl(injectable);
+        mArticleDataStore = new ArticleDataStoreImpl(injectable);
     }
 
     @Override
     public void getTopArticles(@NonNull final Callback<List<Article>> callback) {
-        mTweetRepository.getTimeline(
-                new Callback<List<Tweet>>() {
-                    @Override
-                    public void success(Result<List<Tweet>> result) {
-                        final List<Article> items = processTweets(result);
-                        callback.success(items, result.response);
-                    }
+        mArticleDataStore.getArticles(new DataStoreCallback<List<Article>>() {
+            @Override
+            public void onSuccess(List<Article> result) {
+                if (result == null || result.isEmpty()) {
+                    mTweetRepository.getTimeline(
+                            new Callback<List<Tweet>>() {
+                                @Override
+                                public void success(Result<List<Tweet>> result) {
+                                    final List<Article> items = parseTweets(result);
+                                    mArticleDataStore.setArticles(items);
+                                    callback.success(items, result.response);
+                                }
 
-                    @Override
-                    public void failure(TwitterException e) {
-                        Log.d("API error", e.getMessage());
-                        callback.failure(e);
-                    }
-                });
+                                @Override
+                                public void failure(TwitterException e) {
+                                    Log.d("API error", e.getMessage());
+                                    callback.failure(e);
+                                }
+                            });
+                } else {
+                    callback.success(result, null);
+                }
+            }
+
+            @Override
+            public void onError(DataStoreException exception) {
+                mTweetRepository.getTimeline(
+                        new Callback<List<Tweet>>() {
+                            @Override
+                            public void success(Result<List<Tweet>> result) {
+                                final List<Article> items = parseTweets(result);
+                                mArticleDataStore.setArticles(items);
+                                callback.success(items, result.response);
+                            }
+
+                            @Override
+                            public void failure(TwitterException e) {
+                                Log.d("API error", e.getMessage());
+                                callback.failure(e);
+                            }
+                        });
+            }
+        });
     }
 
     @NonNull
-    private List<Article> processTweets(Result<List<Tweet>> result) {
+    private List<Article> parseTweets(Result<List<Tweet>> result) {
         final List<Article> items = new ArrayList<>();
         for (Tweet tweet : result.data) {
             if (tweet.entities != null && tweet.entities.urls != null &&

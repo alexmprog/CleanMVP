@@ -9,64 +9,80 @@ import android.support.annotation.NonNull;
  */
 public class Article implements Comparable<Article>, Parcelable {
 
-    private static final int HASH_CODE_PRIME = 31;
+    private static final int HASH_CODE = 31;
 
-    private final String title;
-    private final String url;
-    private final int tweetCount;
-    private final String mediaUrl;
+    private String mTitle;
+    private String mUrl;
+    private int mTweetCount;
+    private String mMediaUrl;
+
+    public Article() {
+
+    }
 
     public Article(String title, String url, int tweetCount, String mediaUrl) {
-        this.title = title;
-        this.url = url;
-        this.tweetCount = tweetCount;
-        this.mediaUrl = mediaUrl;
+        this.mTitle = title;
+        this.mUrl = url;
+        this.mTweetCount = tweetCount;
+        this.mMediaUrl = mediaUrl;
     }
 
     @NonNull
     public String getTitle() {
-        return title;
+        return mTitle;
     }
 
     public String getUrl() {
-        return url;
+        return mUrl;
     }
 
     public String getTweetCount() {
-        return String.valueOf(tweetCount);
+        return String.valueOf(mTweetCount);
     }
 
 
     public String getMediaUrl() {
-        return mediaUrl;
+        return mMediaUrl;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         Article article = (Article) o;
 
-        if (tweetCount != article.tweetCount) return false;
-        if (title != null ? !title.equals(article.title) : article.title != null) return false;
-        return !(url != null ? !url.equals(article.url) : article
-                .url != null);
+        if (mTweetCount != article.mTweetCount) {
+            return false;
+        }
+
+        if (mTitle != null ? !mTitle.equals(article.mTitle) : article.mTitle != null) {
+            return false;
+        }
+
+        return !(mUrl != null ? !mUrl.equals(article.mUrl) : article.mUrl != null);
 
     }
 
     @Override
     public int hashCode() {
-        int result = title != null ? title.hashCode() : 0;
-        result = HASH_CODE_PRIME * result + (url != null ? url.hashCode() : 0);
-        result = HASH_CODE_PRIME * result + tweetCount;
+        int result = mTitle != null ? mTitle.hashCode() : 0;
+        result = HASH_CODE * result + (mUrl != null ? mUrl.hashCode() : 0);
+        result = HASH_CODE * result + mTweetCount;
         return result;
     }
 
     @Override
     public int compareTo(@NonNull Article another) {
-        if (this.equals(another) || this.tweetCount == another.tweetCount) return 0;
-        return (this.tweetCount > another.tweetCount) ? -1 : 1;
+        if (this.equals(another) || this.mTweetCount == another.mTweetCount) {
+            return 0;
+        }
+        return (this.mTweetCount > another.mTweetCount) ? -1 : 1;
     }
 
     @Override
@@ -76,17 +92,17 @@ public class Article implements Comparable<Article>, Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.title);
-        dest.writeString(this.url);
-        dest.writeInt(this.tweetCount);
-        dest.writeString(this.mediaUrl);
+        dest.writeString(this.mTitle);
+        dest.writeString(this.mUrl);
+        dest.writeInt(this.mTweetCount);
+        dest.writeString(this.mMediaUrl);
     }
 
     protected Article(Parcel in) {
-        this.title = in.readString();
-        this.url = in.readString();
-        this.tweetCount = in.readInt();
-        this.mediaUrl = in.readString();
+        this.mTitle = in.readString();
+        this.mUrl = in.readString();
+        this.mTweetCount = in.readInt();
+        this.mMediaUrl = in.readString();
     }
 
     public static final Parcelable.Creator<Article> CREATOR = new Parcelable.Creator<Article>() {

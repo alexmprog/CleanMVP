@@ -1,5 +1,7 @@
 package com.renovavision.cleanmvp.presenters;
 
+import android.support.annotation.NonNull;
+
 import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 
 /**
@@ -7,5 +9,5 @@ import com.twitter.sdk.android.core.identity.TwitterLoginButton;
  */
 public interface LoginPresenter extends BasePresenter {
 
-    void configureLoginButton(TwitterLoginButton loginButton);
+    void configureLoginButton(@NonNull TwitterLoginButton loginButton);
 }

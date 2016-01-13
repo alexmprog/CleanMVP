@@ -2,6 +2,7 @@ package com.renovavision.cleanmvp.di.module;
 
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 
 import com.renovavision.cleanmvp.App;
 import com.renovavision.cleanmvp.util.config.BuildConfigManager;
@@ -18,6 +19,7 @@ import dagger.Provides;
 @Module
 public class AppModule {
 
+    @NonNull
     App mApplication;
 
     public AppModule(App application) {

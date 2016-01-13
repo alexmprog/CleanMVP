@@ -1,7 +1,8 @@
 package com.renovavision.cleanmvp.di.module;
 
-import com.renovavision.cleanmvp.di.scope.ScreenScope;
 import com.renovavision.cleanmvp.util.screen.ScreenManager;
+
+import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
@@ -14,7 +15,7 @@ import dagger.Provides;
 public class ScreenModule {
 
     @Provides
-    @ScreenScope
+    @Singleton
     ScreenManager providesScreenManager() {
         return new ScreenManager();
     }

@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.renovavision.cleanmvp.R;
-import com.renovavision.cleanmvp.model.Article;
 import com.renovavision.cleanmvp.model.Image;
 import com.squareup.picasso.Picasso;
 
@@ -44,7 +43,7 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ImageViewH
     @Override
     public void onBindViewHolder(ImageViewHolder holder, int position) {
         final Image image = items.get(position);
-        holder.tweet.setText(image.getRetweetCount());
+        holder.tweet.setText(image.getTweetCount());
         if (!TextUtils.isEmpty(image.getMediaUrl())) {
             holder.media.setVisibility(View.VISIBLE);
             Picasso.with(holder.media.getContext()).load(image.getMediaUrl()).into(holder.media);

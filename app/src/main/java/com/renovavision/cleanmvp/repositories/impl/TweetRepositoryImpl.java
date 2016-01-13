@@ -29,7 +29,7 @@ public class TweetRepositoryImpl implements TweetRepository {
 
     @Override
     public void getTimeline(@NonNull final Callback<List<Tweet>> callback) {
-        mTwitterApi.getTimelineService().getTimeline(200, true, true, true, true,
+        mTwitterApi.getTimelineService().getTimeline(300, true, true, true, true,
                 new Callback<List<Tweet>>() {
                     @Override
                     public void success(Result<List<Tweet>> result) {
